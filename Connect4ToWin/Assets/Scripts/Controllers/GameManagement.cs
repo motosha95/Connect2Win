@@ -9,9 +9,12 @@ public enum CellState
 }
 public class GameManagement : MonoBehaviour
 {
+    public static GameManagement instance;
+
     [SerializeField]
     GameData gameData;
-    UIManagement uiManager;
+
+    UIManagement _uiManager;
     public CellState[][] GamePlayMatrix;
 
 
@@ -19,7 +22,7 @@ public class GameManagement : MonoBehaviour
     private bool gameEnded;
     private void Awake()
     {
-        uiManager = FindObjectOfType<UIManagement>();
+        _uiManager = UIManagement.instance;
     }
     #region PrivateMethods
     private bool CheckWinningStep(int _col,int _row)
@@ -136,7 +139,7 @@ public class GameManagement : MonoBehaviour
         return PLayerTurn;
     }
     /// <summary>
-    /// Call this On IntializeGame from UIManager
+    /// Call this On IntializeGame from _uiManager
     /// </summary>
     /// <param name="coloumns"></param>
     /// <param name="rows"></param>
@@ -160,7 +163,7 @@ public class GameManagement : MonoBehaviour
         GamePlayMatrix[_coloumn][_row] =(CellState) PLayerTurn;
         if (CheckWinningStep(_coloumn, _row))
         {
-            uiManager.UpdateStatusText("Player(" + PLayerTurn + ") Winns");
+            _uiManager.UpdateStatusText("Player(" + PLayerTurn + ") Winns");
             gameEnded = true;
         }
         else
@@ -175,7 +178,7 @@ public class GameManagement : MonoBehaviour
                 PLayerTurn = 1;
 
             }
-            uiManager.UpdateStatusText("Player(" + PLayerTurn + ") Turn");
+            _uiManager.UpdateStatusText("Player(" + PLayerTurn + ") Turn");
 
         }
     }

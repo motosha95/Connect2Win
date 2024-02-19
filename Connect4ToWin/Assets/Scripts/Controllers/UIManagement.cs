@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIManagement : MonoBehaviour
 {
+    public static UIManagement instance;
     [Header("Intialization Elements")]
     [SerializeField]
     Transform gamePlayContainer;
@@ -33,7 +34,8 @@ public class UIManagement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gameManager = FindObjectOfType<GameManagement>();
+
+        gameManager = GameManagement.instance;
         IntializeButton.onClick.AddListener(delegate { IntializeGameUI(); });
         CloseButton.onClick.AddListener(delegate { ExitGame(); });
         ReadSaveData();
